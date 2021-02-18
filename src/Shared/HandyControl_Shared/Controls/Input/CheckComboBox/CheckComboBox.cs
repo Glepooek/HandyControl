@@ -2,7 +2,10 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using HandyControl.Data;
 using HandyControl.Interactivity;
 
@@ -71,7 +74,20 @@ namespace HandyControl.Controls
         }
 
         public static readonly DependencyProperty IsDropDownOpenProperty = DependencyProperty.Register(
-            "IsDropDownOpen", typeof(bool), typeof(CheckComboBox), new PropertyMetadata(ValueBoxes.FalseBox));
+            "IsDropDownOpen", typeof(bool), typeof(CheckComboBox), new PropertyMetadata(ValueBoxes.FalseBox, OnIsDropDownOpenChanged));
+
+        private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctl = (CheckComboBox) d;
+
+            if (!(bool) e.NewValue)
+            {
+                ctl.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    Mouse.Capture(null);
+                }), DispatcherPriority.Send);
+            }
+        }
 
         public bool IsDropDownOpen
         {
@@ -101,13 +117,14 @@ namespace HandyControl.Controls
         {
             AddHandler(Controls.Tag.ClosedEvent, new RoutedEventHandler(Tags_OnClosed));
             CommandBindings.Add(new CommandBinding(ControlCommands.Clear, (s, e) => SelectedItems.Clear()));
+            ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
         }
 
-        private void Tags_OnClosed(object sender, RoutedEventArgs e)
+        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
         {
-            if (e.OriginalSource is Tag tag && tag.Tag is CheckComboBoxItem checkComboBoxItem)
+            if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {
-                checkComboBoxItem.SetCurrentValue(IsSelectedProperty, false);
+                UpdateTags();
             }
         }
 
@@ -128,6 +145,12 @@ namespace HandyControl.Controls
                 _selectAllItem.Selected += SelectAllItem_Selected;
                 _selectAllItem.Unselected += SelectAllItem_Unselected;
             }
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                IsDropDownOpen = true;
+                IsDropDownOpen = false;
+            }), DispatcherPriority.DataBind);
         }
 
         public bool VerifyData()
@@ -161,6 +184,28 @@ namespace HandyControl.Controls
 
         public Func<string, OperationResult<bool>> VerifyFunc { get; set; }
 
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+        {
+            UpdateTags();
+            VerifyData();
+
+            base.OnSelectionChanged(e);
+        }
+
+        protected override bool IsItemItsOwnContainerOverride(object item) => item is CheckComboBoxItem;
+
+        protected override DependencyObject GetContainerForItemOverride() => new CheckComboBoxItem();
+
+        protected override void OnDisplayMemberPathChanged(string oldDisplayMemberPath, string newDisplayMemberPath) => UpdateTags();
+
+        private void Tags_OnClosed(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is Tag tag && tag.Tag is CheckComboBoxItem checkComboBoxItem)
+            {
+                checkComboBoxItem.SetCurrentValue(IsSelectedProperty, false);
+            }
+        }
+
         private void SwitchAllItems(bool selected)
         {
             if (_isInternalAction) return;
@@ -182,18 +227,6 @@ namespace HandyControl.Controls
 
         private void SelectAllItem_Unselected(object sender, RoutedEventArgs e) => SwitchAllItems(false);
 
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            UpdateTags();
-            VerifyData();
-
-            base.OnSelectionChanged(e);
-        }
-
-        protected override bool IsItemItsOwnContainerOverride(object item) => item is CheckComboBoxItem;
-
-        protected override DependencyObject GetContainerForItemOverride() => new CheckComboBoxItem();
-
         private void UpdateTags()
         {
             if (_panel == null || _isInternalAction) return;
@@ -206,6 +239,7 @@ namespace HandyControl.Controls
             }
 
             _panel.Children.Clear();
+            var dataContext = DataContext;
 
             foreach (var item in SelectedItems)
             {
@@ -214,9 +248,18 @@ namespace HandyControl.Controls
                     var tag = new Tag
                     {
                         Style = TagStyle,
-                        Content = checkComboBoxItem.Content,
                         Tag = checkComboBoxItem
                     };
+
+                    if (dataContext != null)
+                    {
+                        tag.SetBinding(ContentControl.ContentProperty, new Binding(DisplayMemberPath) { Source = item });
+                    }
+                    else
+                    {
+                        tag.Content = checkComboBoxItem.Content;
+                    }
+
                     _panel.Children.Add(tag);
                 }
             }

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>HandyControl</id>
-    <version>2.5.0.2</version>
+    <version>3.0.0</version>
     <title>HandyOrg</title>
     <authors>HandyOrg</authors>
     <owners>HandyOrg</owners>
@@ -14,7 +14,7 @@
     <releaseNotes>Changes are detailed at https://github.com/HandyOrg/HandyControl/releases</releaseNotes>
     <copyright>Copyright © HandyOrg 2018-2020</copyright>
     <tags>WPF C# Control</tags>
-    <repository type="git" url="https://github.com/HandyOrg/HandyControl" commit="be21771a17c46074df1b1a8a6da88dea8d548392" />
+    <repository type="git" url="https://github.com/HandyOrg/HandyControl" commit="35bbccd5b86bcedcfe16886857343e719feaf173" />
     <dependencies>
       <group targetFramework=".NETFramework4.0">
         <dependency id="Microsoft.Windows.Shell" version="3.0.1" />
@@ -25,6 +25,7 @@
       <group targetFramework=".NETFramework4.8" />
       <group targetFramework=".NETCoreApp3.0" />
       <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework="net5.0" />
     </dependencies>
   </metadata>
   <files>
@@ -74,6 +75,19 @@
     <file src="lib\net48\HandyControl.dll" target="lib\net48\HandyControl.dll" />
     <file src="lib\net48\HandyControl.pdb" target="lib\net48\HandyControl.pdb" />
     <file src="lib\net48\HandyControl.xml" target="lib\net48\HandyControl.xml" />
+    <file src="lib\net5.0-windows\ca-ES\HandyControl.resources.dll" target="lib\net5.0-windows\ca-ES\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\en\HandyControl.resources.dll" target="lib\net5.0-windows\en\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\fa\HandyControl.resources.dll" target="lib\net5.0-windows\fa\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\fr\HandyControl.resources.dll" target="lib\net5.0-windows\fr\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\ko-KR\HandyControl.resources.dll" target="lib\net5.0-windows\ko-KR\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\pt-BR\HandyControl.resources.dll" target="lib\net5.0-windows\pt-BR\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\ref\HandyControl.dll" target="lib\net5.0-windows\ref\HandyControl.dll" />
+    <file src="lib\net5.0-windows\ru\HandyControl.resources.dll" target="lib\net5.0-windows\ru\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\tr\HandyControl.resources.dll" target="lib\net5.0-windows\tr\HandyControl.resources.dll" />
+    <file src="lib\net5.0-windows\HandyControl.deps.json" target="lib\net5.0-windows\HandyControl.deps.json" />
+    <file src="lib\net5.0-windows\HandyControl.dll" target="lib\net5.0-windows\HandyControl.dll" />
+    <file src="lib\net5.0-windows\HandyControl.pdb" target="lib\net5.0-windows\HandyControl.pdb" />
+    <file src="lib\net5.0-windows\HandyControl.xml" target="lib\net5.0-windows\HandyControl.xml" />
     <file src="lib\netcoreapp3.0\en\HandyControl.resources.dll" target="lib\netcoreapp3.0\en\HandyControl.resources.dll" />
     <file src="lib\netcoreapp3.0\fa\HandyControl.resources.dll" target="lib\netcoreapp3.0\fa\HandyControl.resources.dll" />
     <file src="lib\netcoreapp3.0\fr\HandyControl.resources.dll" target="lib\netcoreapp3.0\fr\HandyControl.resources.dll" />
@@ -94,6 +108,7 @@
     <file src="lib\netcoreapp3.1\HandyControl.dll" target="lib\netcoreapp3.1\HandyControl.dll" />
     <file src="lib\netcoreapp3.1\HandyControl.pdb" target="lib\netcoreapp3.1\HandyControl.pdb" />
     <file src="lib\netcoreapp3.1\HandyControl.xml" target="lib\netcoreapp3.1\HandyControl.xml" />
+    <file src="tools\VisualStudioToolsManifest.xml" target="tools\VisualStudioToolsManifest.xml" />
     <file src="icon.png" target="icon.png" />
     <file src="LICENSE" target="LICENSE" />
   </files>

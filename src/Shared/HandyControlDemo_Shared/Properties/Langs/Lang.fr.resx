@@ -130,10 +130,10 @@
     <value>C'est une belle journée aujourd'hui</value>
   </data>
   <data name="GrowlSuccess" xml:space="preserve">
-    <value>Fichier enregistré</value>
+    <value>Fichier enregistré!</value>
   </data>
   <data name="GrowlWarning" xml:space="preserve">
-    <value>Espace disque bientôt epuisé</value>
+    <value>Espace disque bientôt epuisé!</value>
   </data>
   <data name="GrowlError" xml:space="preserve">
     <value>Erreur de connexion. Veuillez vérifier votre réseau !</value>
@@ -761,5 +761,38 @@
   </data>
   <data name="CheckComboBox" xml:space="preserve">
     <value>CheckComboBox</value>
+  </data>
+  <data name="FlexPanel" xml:space="preserve">
+    <value>FlexPanel</value>
+  </data>
+  <data name="OpenTouchDragMoveWindow" xml:space="preserve">
+    <value>open touch drag move window</value>
+  </data>
+  <data name="UniformSpacingPanel" xml:space="preserve">
+    <value>UniformSpacingPanel</value>
+  </data>
+  <data name="Misc" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="Interacting" xml:space="preserve">
+    <value>Interacting</value>
+  </data>
+  <data name="DataEntry" xml:space="preserve">
+    <value>Data Entry</value>
+  </data>
+  <data name="DataDisplay" xml:space="preserve">
+    <value>Data Display</value>
+  </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Empty</value>
   </data>
 </root>

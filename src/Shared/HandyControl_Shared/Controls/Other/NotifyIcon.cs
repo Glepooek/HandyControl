@@ -69,8 +69,8 @@ namespace HandyControl.Controls
 
         private static void OnVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var ctl = (NotifyIcon)d;
-            var v = (Visibility)e.NewValue;
+            var ctl = (NotifyIcon) d;
+            var v = (Visibility) e.NewValue;
 
             if (v == Visibility.Visible)
             {
@@ -97,7 +97,7 @@ namespace HandyControl.Controls
 
         private static void ContextMenuPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var ctl = (NotifyIcon)d;
+            var ctl = (NotifyIcon) d;
             ctl.OnContextMenuPropertyChanged(e);
         }
 
@@ -249,7 +249,7 @@ namespace HandyControl.Controls
 
         public string Token
         {
-            get => (string)GetValue(TokenProperty);
+            get => (string) GetValue(TokenProperty);
             set => SetValue(TokenProperty, value);
         }
 
@@ -258,7 +258,7 @@ namespace HandyControl.Controls
 
         public string Text
         {
-            get => (string)GetValue(TextProperty);
+            get => (string) GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
@@ -267,14 +267,19 @@ namespace HandyControl.Controls
 
         private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var ctl = (NotifyIcon)d;
-            ctl._icon = (ImageSource)e.NewValue;
+            var ctl = (NotifyIcon) d;
+            ctl._icon = (ImageSource) e.NewValue;
             ctl.OnIconChanged();
+
+            if (!string.IsNullOrEmpty(ctl._windowClassName) && !ctl.IsBlink && ctl.Visibility == Visibility.Visible)
+            {
+                ctl.UpdateIcon(true);
+            }
         }
 
         public ImageSource Icon
         {
-            get => (ImageSource)GetValue(IconProperty);
+            get => (ImageSource) GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
 
@@ -292,16 +297,16 @@ namespace HandyControl.Controls
 
         private static void OnBlinkIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var ctl = (NotifyIcon)d;
+            var ctl = (NotifyIcon) d;
             if (ctl._dispatcherTimerBlink != null)
             {
-                ctl._dispatcherTimerBlink.Interval = (TimeSpan)e.NewValue;
+                ctl._dispatcherTimerBlink.Interval = (TimeSpan) e.NewValue;
             }
         }
 
         public TimeSpan BlinkInterval
         {
-            get => (TimeSpan)GetValue(BlinkIntervalProperty);
+            get => (TimeSpan) GetValue(BlinkIntervalProperty);
             set => SetValue(BlinkIntervalProperty, value);
         }
 
@@ -310,9 +315,9 @@ namespace HandyControl.Controls
 
         private static void OnIsBlinkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var ctl = (NotifyIcon)d;
+            var ctl = (NotifyIcon) d;
             if (ctl.Visibility != Visibility.Visible) return;
-            if ((bool)e.NewValue)
+            if ((bool) e.NewValue)
             {
                 if (ctl._dispatcherTimerBlink == null)
                 {
@@ -334,7 +339,7 @@ namespace HandyControl.Controls
 
         public bool IsBlink
         {
-            get => (bool)GetValue(IsBlinkProperty);
+            get => (bool) GetValue(IsBlinkProperty);
             set => SetValue(IsBlinkProperty, ValueBoxes.BooleanBox(value));
         }
 
@@ -346,16 +351,15 @@ namespace HandyControl.Controls
 
         private bool CheckMouseIsEnter()
         {
-            var isTrue = FindNotifyIcon(out var rectNotify);
+            var isTrue = FindNotifyIcon(out var rectNotifyList);
             if (!isTrue) return false;
-            InteropMethods.GetCursorPos(out var point);
-            if (point.X >= rectNotify.Left && point.X <= rectNotify.Right &&
-                point.Y >= rectNotify.Top && point.Y <= rectNotify.Bottom)
-            {
-                return true;
-            }
 
-            return false;
+            InteropMethods.GetCursorPos(out var point);
+            return rectNotifyList.Any(rectNotify =>
+                point.X >= rectNotify.Left &&
+                point.X <= rectNotify.Right &&
+                point.Y >= rectNotify.Top &&
+                point.Y <= rectNotify.Bottom);
         }
 
         private void DispatcherTimerPos_Tick(object sender, EventArgs e)
@@ -392,15 +396,14 @@ namespace HandyControl.Controls
                 hWnd = InteropMethods.FindWindowEx(hWnd, IntPtr.Zero, "TrayNotifyWnd", null);
                 if (hWnd != IntPtr.Zero)
                 {
-
                     hWnd = InteropMethods.FindWindowEx(hWnd, IntPtr.Zero, "SysPager", null);
                     if (hWnd != IntPtr.Zero)
                     {
                         hWnd = InteropMethods.FindWindowEx(hWnd, IntPtr.Zero, "ToolbarWindow32", null);
-
                     }
                 }
             }
+
             return hWnd;
         }
 
@@ -415,25 +418,25 @@ namespace HandyControl.Controls
             return hWnd;
         }
 
-        private bool FindNotifyIcon(out InteropValues.RECT rect)
+        private bool FindNotifyIcon(out List<InteropValues.RECT> rectList)
         {
-            var rectNotify = new InteropValues.RECT();
+            var rectNotifyList = new List<InteropValues.RECT>();
             var hTrayWnd = FindTrayToolbarWindow();
-            var isTrue = FindNotifyIcon(hTrayWnd, ref rectNotify);
+            var isTrue = FindNotifyIcon(hTrayWnd, ref rectNotifyList);
             if (!isTrue)
             {
                 hTrayWnd = FindTrayToolbarOverFlowWindow();
-                isTrue = FindNotifyIcon(hTrayWnd, ref rectNotify);
+                isTrue = FindNotifyIcon(hTrayWnd, ref rectNotifyList);
             }
-            rect = rectNotify;
+            rectList = rectNotifyList;
             return isTrue;
         }
 
         //referenced from http://www.cnblogs.com/sczmzx/p/5158127.html
-        private bool FindNotifyIcon(IntPtr hTrayWnd, ref InteropValues.RECT rectNotify)
+        private bool FindNotifyIcon(IntPtr hTrayWnd, ref List<InteropValues.RECT> rectNotifyList)
         {
             InteropMethods.GetWindowRect(hTrayWnd, out var rectTray);
-            var count = (int)InteropMethods.SendMessage(hTrayWnd, InteropValues.TB_BUTTONCOUNT, 0, IntPtr.Zero);
+            var count = (int) InteropMethods.SendMessage(hTrayWnd, InteropValues.TB_BUTTONCOUNT, 0, IntPtr.Zero);
 
             var isFind = false;
             if (count > 0)
@@ -444,23 +447,27 @@ namespace HandyControl.Controls
 
                 var btnData = new InteropValues.TBBUTTON();
                 var trayData = new InteropValues.TRAYDATA();
-                var handel = Process.GetCurrentProcess().Id;
+                var handle = Process.GetCurrentProcess().Id;
 
                 for (uint i = 0; i < count; i++)
                 {
                     InteropMethods.SendMessage(hTrayWnd, InteropValues.TB_GETBUTTON, i, address);
                     var isTrue = InteropMethods.ReadProcessMemory(hProcess, address, out btnData, Marshal.SizeOf(btnData), out _);
                     if (!isTrue) continue;
+
                     if (btnData.dwData == IntPtr.Zero)
                     {
                         btnData.dwData = btnData.iString;
                     }
+
                     InteropMethods.ReadProcessMemory(hProcess, btnData.dwData, out trayData, Marshal.SizeOf(trayData), out _);
                     InteropMethods.GetWindowThreadProcessId(trayData.hwnd, out var dwProcessId);
-                    if (dwProcessId == (uint)handel)
+
+                    if (dwProcessId == (uint) handle)
                     {
                         var rect = new InteropValues.RECT();
                         var lngRect = InteropMethods.VirtualAllocEx(hProcess, IntPtr.Zero, Marshal.SizeOf(typeof(Rect)), InteropValues.AllocationType.Commit, InteropValues.MemoryProtection.ReadWrite);
+
                         InteropMethods.SendMessage(hTrayWnd, InteropValues.TB_GETITEMRECT, i, lngRect);
                         InteropMethods.ReadProcessMemory(hProcess, lngRect, out rect, Marshal.SizeOf(rect), out _);
 
@@ -471,15 +478,14 @@ namespace HandyControl.Controls
                         var top = rectTray.Top + rect.Top;
                         var botton = rectTray.Top + rect.Bottom;
                         var right = rectTray.Left + rect.Right;
-                        rectNotify = new InteropValues.RECT
+                        rectNotifyList.Add(new InteropValues.RECT
                         {
                             Left = left,
                             Right = right,
                             Top = top,
                             Bottom = botton
-                        };
+                        });
                         isFind = true;
-                        break;
                     }
                 }
                 InteropMethods.VirtualFreeEx(hProcess, address, 0x4096, InteropValues.FreeType.Decommit);
@@ -491,6 +497,8 @@ namespace HandyControl.Controls
 
         private void OnIconChanged()
         {
+            if (_windowClassName == null) return;
+
             if (_icon != null)
             {
                 IconHelper.GetIconHandlesFromImageSource(_icon, out _, out _iconHandle);
@@ -574,8 +582,10 @@ namespace HandyControl.Controls
             {
                 if (msg == _wmTaskbarCreated)
                 {
-                    _added = false;
-                    UpdateIcon(true);
+                    if (_messageWindowHandle == hWnd && Visibility == Visibility.Visible)
+                    {
+                        UpdateIcon(true);
+                    }
                 }
                 else
                 {
@@ -634,17 +644,14 @@ namespace HandyControl.Controls
 
             if (ContextContent != null)
             {
-                if (_contextContent == null)
+                _contextContent ??= new Popup
                 {
-                    _contextContent = new Popup
-                    {
-                        Placement = PlacementMode.Mouse,
-                        AllowsTransparency = true,
-                        StaysOpen = false,
-                        UseLayoutRounding = true,
-                        SnapsToDevicePixels = true
-                    };
-                }
+                    Placement = PlacementMode.Mouse,
+                    AllowsTransparency = true,
+                    StaysOpen = false,
+                    UseLayoutRounding = true,
+                    SnapsToDevicePixels = true
+                };
 
                 _contextContent.Child = new ContentControl
                 {

@@ -2,14 +2,23 @@
   <PropertyGroup>
     <AssemblyName>HandyControl</AssemblyName>
     <RootNamespace>HandyControl</RootNamespace>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net45;net462;net47;net48;net50</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net5.0-windows</TargetFrameworks>
     <Description>Contains some commonly used simple WPF controls</Description>
     <PackageId>HandyControl</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <NoWarn>0067;0649;1591</NoWarn>
+    <NoWarn>0067;0649;1591;MSB3061;SYSLIB0003;SYSLIB0004</NoWarn>
+    <MSBuildWarningsAsMessages>NETSDK1138</MSBuildWarningsAsMessages>
+    <UseWPF>true</UseWPF>
+    <AssemblyOriginatorKeyFile>..\..\Shared\HandyControl_Shared\key.snk</AssemblyOriginatorKeyFile>
+    <Copyright>Copyright © HandyOrg 2018-2021</Copyright>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <FileVersion>3.1.0.0</FileVersion>
+    <Version>3.1.0.0</Version>
+    <RepositoryUrl>https://github.com/HandyOrg/HandyControl</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <SignAssembly>true</SignAssembly>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\HandyControl.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
@@ -29,6 +38,9 @@
   <ItemGroup>
     <EmbeddedResource Include="..\..\Shared\HandyControl_Shared\Properties\Langs\Lang.tr.resx">
       <Link>Properties\Langs\Lang.tr.resx</Link>
+    </EmbeddedResource>    
+    <EmbeddedResource Include="..\..\Shared\HandyControl_Shared\Properties\Langs\Lang.ca-ES.resx">
+      <Link>Properties\Langs\Lang.ca-ES.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Shared\HandyControl_Shared\Properties\Langs\Lang.en.resx">
       <Link>Properties\Langs\Lang.en.resx</Link>
@@ -41,6 +53,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Shared\HandyControl_Shared\Properties\Langs\Lang.ko-KR.resx">
       <Link>Properties\Langs\Lang.ko-KR.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Shared\HandyControl_Shared\Properties\Langs\Lang.pl.resx">
+      <Link>Properties\Langs\Lang.pl.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Shared\HandyControl_Shared\Properties\Langs\Lang.pt-BR.resx">
       <Link>Properties\Langs\Lang.pt-BR.resx</Link>
@@ -137,4 +152,7 @@
       <Link>Resources\Images\GlowWindow\topright.png</Link>
     </Resource>
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="..\..\Shared\HandyControl_Shared\Themes\XamlCombine.exe ..\..\Shared\HandyControl_Shared\Themes\Theme_GE45.txt Theme.xaml" />
+  </Target>
 </Project>

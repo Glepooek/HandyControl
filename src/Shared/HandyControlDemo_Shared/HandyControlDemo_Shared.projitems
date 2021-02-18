@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tools\Converter\StringRepeatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\Extension\LangExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\Helper\AssemblyHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\Helper\VersionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\Helper\Win32Helper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Basic\Avatar.xaml.cs">
       <DependentUpon>Avatar.xaml</DependentUpon>
@@ -57,6 +58,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Basic\TextDialogWithTimer.xaml.cs">
       <DependentUpon>TextDialogWithTimer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UserControl\Controls\FlexPanelDemoCtl.xaml.cs">
+      <DependentUpon>FlexPanelDemoCtl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Controls\ImageSelectorDemoCtl.xaml.cs">
       <DependentUpon>ImageSelectorDemoCtl.xaml</DependentUpon>
@@ -250,6 +254,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Controls\TransitioningContentControlDemoCtl.xaml.cs">
       <DependentUpon>TransitioningContentControlDemoCtl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UserControl\Controls\UniformSpacingPanelDemoCtl.xaml.cs">
+      <DependentUpon>UniformSpacingPanelDemoCtl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Controls\WaterfallPanelDemoCtl.xaml.cs">
       <DependentUpon>WaterfallPanelDemoCtl.xaml</DependentUpon>
     </Compile>
@@ -265,8 +272,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Main\MainWindowContent.xaml.cs">
       <DependentUpon>MainWindowContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UserControl\Main\NoUserContent.xaml.cs">
-      <DependentUpon>NoUserContent.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)UserControl\Main\NonClientAreaContent.cs">
+      <DependentUpon>NonClientAreaContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UserControl\Main\ProjectsView.xaml.cs">
       <DependentUpon>ProjectsView.xaml</DependentUpon>
@@ -415,11 +422,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Controls\SpriteDemoViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Controls\StepBarDemoViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Controls\TabControlDemoViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Controls\TagDemoViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Controls\WindowDemoViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DemoViewModelBase!1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Main\ItemsDisplayViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Main\MainViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Main\NoUserViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Main\NonClientAreaViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Window\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -447,6 +455,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Window\NativeCommonWindow.xaml.cs">
       <DependentUpon>NativeCommonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Window\TouchDragMoveWindow.xaml.cs">
+      <DependentUpon>TouchDragMoveWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Window\NavigationWindow.xaml.cs">
       <DependentUpon>NavigationWindow.xaml</DependentUpon>
@@ -525,6 +536,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)UserControl\Basic\TextDialogWithTimer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UserControl\Controls\FlexPanelDemoCtl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -784,6 +799,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UserControl\Controls\UniformSpacingPanelDemoCtl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)UserControl\Controls\WaterfallPanelDemoCtl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -804,7 +823,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)UserControl\Main\NoUserContent.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)UserControl\Main\NonClientAreaContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1016,6 +1035,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Window\TouchDragMoveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Window\NavigationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1033,5 +1056,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Service\Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)app.manifest" />
   </ItemGroup>
 </Project>

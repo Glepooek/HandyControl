@@ -35,54 +35,54 @@ namespace HandyControl.Properties.Langs
                 Mode = BindingMode.OneWay
             });
 
-		private void UpdateLangs()
+        private void UpdateLangs()
         {
             OnPropertyChanged(nameof(All));
             OnPropertyChanged(nameof(Am));
-			OnPropertyChanged(nameof(Cancel));
-			OnPropertyChanged(nameof(CannotRegisterCompositeCommandInItself));
-			OnPropertyChanged(nameof(CannotRegisterSameCommandTwice));
-			OnPropertyChanged(nameof(Clear));
-			OnPropertyChanged(nameof(Close));
-			OnPropertyChanged(nameof(CloseAll));
-			OnPropertyChanged(nameof(CloseOther));
-			OnPropertyChanged(nameof(Confirm));
-			OnPropertyChanged(nameof(ErrorImgPath));
-			OnPropertyChanged(nameof(ErrorImgSize));
-			OnPropertyChanged(nameof(Find));
-			OnPropertyChanged(nameof(FormatError));
-			OnPropertyChanged(nameof(Interval10m));
-			OnPropertyChanged(nameof(Interval1h));
-			OnPropertyChanged(nameof(Interval1m));
-			OnPropertyChanged(nameof(Interval2h));
-			OnPropertyChanged(nameof(Interval30m));
-			OnPropertyChanged(nameof(Interval30s));
-			OnPropertyChanged(nameof(Interval5m));
-			OnPropertyChanged(nameof(IsNecessary));
-			OnPropertyChanged(nameof(Jump));
-			OnPropertyChanged(nameof(LangComment));
-			OnPropertyChanged(nameof(NextPage));
-			OnPropertyChanged(nameof(No));
-			OnPropertyChanged(nameof(OutOfRange));
-			OnPropertyChanged(nameof(PageMode));
-			OnPropertyChanged(nameof(Pm));
-			OnPropertyChanged(nameof(PngImg));
-			OnPropertyChanged(nameof(PreviousPage));
-			OnPropertyChanged(nameof(ScrollMode));
-			OnPropertyChanged(nameof(Tip));
-			OnPropertyChanged(nameof(TooLarge));
-			OnPropertyChanged(nameof(TwoPageMode));
-			OnPropertyChanged(nameof(Unknown));
-			OnPropertyChanged(nameof(UnknownSize));
-			OnPropertyChanged(nameof(Yes));
-			OnPropertyChanged(nameof(ZoomIn));
-			OnPropertyChanged(nameof(ZoomOut));
+            OnPropertyChanged(nameof(Cancel));
+            OnPropertyChanged(nameof(Clear));
+            OnPropertyChanged(nameof(Close));
+            OnPropertyChanged(nameof(CloseAll));
+            OnPropertyChanged(nameof(CloseOther));
+            OnPropertyChanged(nameof(Confirm));
+            OnPropertyChanged(nameof(ErrorImgPath));
+            OnPropertyChanged(nameof(ErrorImgSize));
+            OnPropertyChanged(nameof(Find));
+            OnPropertyChanged(nameof(FormatError));
+            OnPropertyChanged(nameof(Interval10m));
+            OnPropertyChanged(nameof(Interval1h));
+            OnPropertyChanged(nameof(Interval1m));
+            OnPropertyChanged(nameof(Interval2h));
+            OnPropertyChanged(nameof(Interval30m));
+            OnPropertyChanged(nameof(Interval30s));
+            OnPropertyChanged(nameof(Interval5m));
+            OnPropertyChanged(nameof(IsNecessary));
+            OnPropertyChanged(nameof(Jump));
+            OnPropertyChanged(nameof(LangComment));
+            OnPropertyChanged(nameof(Miscellaneous));
+            OnPropertyChanged(nameof(NextPage));
+            OnPropertyChanged(nameof(No));
+            OnPropertyChanged(nameof(NoData));
+            OnPropertyChanged(nameof(OutOfRange));
+            OnPropertyChanged(nameof(PageMode));
+            OnPropertyChanged(nameof(Pm));
+            OnPropertyChanged(nameof(PngImg));
+            OnPropertyChanged(nameof(PreviousPage));
+            OnPropertyChanged(nameof(ScrollMode));
+            OnPropertyChanged(nameof(Tip));
+            OnPropertyChanged(nameof(TooLarge));
+            OnPropertyChanged(nameof(TwoPageMode));
+            OnPropertyChanged(nameof(Unknown));
+            OnPropertyChanged(nameof(UnknownSize));
+            OnPropertyChanged(nameof(Yes));
+            OnPropertyChanged(nameof(ZoomIn));
+            OnPropertyChanged(nameof(ZoomOut));
         }
 
         /// <summary>
-        ///   查找类似 所有 的本地化字符串。
+        ///   查找类似 全部 的本地化字符串。
         /// </summary>
-        public string All => Lang.All;
+		public string All => Lang.All;
 
         /// <summary>
         ///   查找类似 上午 的本地化字符串。
@@ -93,16 +93,6 @@ namespace HandyControl.Properties.Langs
         ///   查找类似 取消 的本地化字符串。
         /// </summary>
 		public string Cancel => Lang.Cancel;
-
-        /// <summary>
-        ///   查找类似 无法自注册复合命令 的本地化字符串。
-        /// </summary>
-		public string CannotRegisterCompositeCommandInItself => Lang.CannotRegisterCompositeCommandInItself;
-
-        /// <summary>
-        ///   查找类似 不能注册同一命令两次 的本地化字符串。
-        /// </summary>
-		public string CannotRegisterSameCommandTwice => Lang.CannotRegisterSameCommandTwice;
 
         /// <summary>
         ///   查找类似 清空 的本地化字符串。
@@ -200,6 +190,11 @@ namespace HandyControl.Properties.Langs
 		public string LangComment => Lang.LangComment;
 
         /// <summary>
+        ///   查找类似 杂项 的本地化字符串。
+        /// </summary>
+		public string Miscellaneous => Lang.Miscellaneous;
+
+        /// <summary>
         ///   查找类似 下一页 的本地化字符串。
         /// </summary>
 		public string NextPage => Lang.NextPage;
@@ -208,6 +203,11 @@ namespace HandyControl.Properties.Langs
         ///   查找类似 否 的本地化字符串。
         /// </summary>
 		public string No => Lang.No;
+
+        /// <summary>
+        ///   查找类似 暂无数据 的本地化字符串。
+        /// </summary>
+        public string NoData => Lang.NoData;
 
         /// <summary>
         ///   查找类似 不在范围内 的本地化字符串。
@@ -289,9 +289,9 @@ namespace HandyControl.Properties.Langs
     public class LangKeys
     {
         /// <summary>
-        ///   查找类似 所有 的本地化字符串。
+        ///   查找类似 全部 的本地化字符串。
         /// </summary>
-        public static string All = nameof(All);
+		public static string All = nameof(All);
 
         /// <summary>
         ///   查找类似 上午 的本地化字符串。
@@ -302,16 +302,6 @@ namespace HandyControl.Properties.Langs
         ///   查找类似 取消 的本地化字符串。
         /// </summary>
 		public static string Cancel = nameof(Cancel);
-
-        /// <summary>
-        ///   查找类似 无法自注册复合命令 的本地化字符串。
-        /// </summary>
-		public static string CannotRegisterCompositeCommandInItself = nameof(CannotRegisterCompositeCommandInItself);
-
-        /// <summary>
-        ///   查找类似 不能注册同一命令两次 的本地化字符串。
-        /// </summary>
-		public static string CannotRegisterSameCommandTwice = nameof(CannotRegisterSameCommandTwice);
 
         /// <summary>
         ///   查找类似 清空 的本地化字符串。
@@ -409,6 +399,11 @@ namespace HandyControl.Properties.Langs
 		public static string LangComment = nameof(LangComment);
 
         /// <summary>
+        ///   查找类似 杂项 的本地化字符串。
+        /// </summary>
+		public static string Miscellaneous = nameof(Miscellaneous);
+
+        /// <summary>
         ///   查找类似 下一页 的本地化字符串。
         /// </summary>
 		public static string NextPage = nameof(NextPage);
@@ -417,6 +412,11 @@ namespace HandyControl.Properties.Langs
         ///   查找类似 否 的本地化字符串。
         /// </summary>
 		public static string No = nameof(No);
+
+        /// <summary>
+        ///   查找类似 暂无数据 的本地化字符串。
+        /// </summary>
+        public static string NoData = nameof(NoData);
 
         /// <summary>
         ///   查找类似 不在范围内 的本地化字符串。

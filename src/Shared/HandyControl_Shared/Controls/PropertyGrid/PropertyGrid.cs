@@ -29,8 +29,8 @@ namespace HandyControl.Controls
 
         public PropertyGrid()
         {
-            CommandBindings.Add(new CommandBinding(ControlCommands.SortByCategory, SortByCategory));
-            CommandBindings.Add(new CommandBinding(ControlCommands.SortByName, SortByName));
+            CommandBindings.Add(new CommandBinding(ControlCommands.SortByCategory, SortByCategory, (s, e) => e.CanExecute = ShowSortButton));
+            CommandBindings.Add(new CommandBinding(ControlCommands.SortByName, SortByName, (s, e) => e.CanExecute = ShowSortButton));
         }
 
         public virtual PropertyResolver PropertyResolver { get; } = new PropertyResolver();
@@ -50,7 +50,7 @@ namespace HandyControl.Controls
 
         private static void OnSelectedObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var ctl = (PropertyGrid)d;
+            var ctl = (PropertyGrid) d;
             ctl.OnSelectedObjectChanged(e.OldValue, e.NewValue);
         }
 
@@ -71,7 +71,7 @@ namespace HandyControl.Controls
 
         public string Description
         {
-            get => (string)GetValue(DescriptionProperty);
+            get => (string) GetValue(DescriptionProperty);
             set => SetValue(DescriptionProperty, value);
         }
 
@@ -91,6 +91,15 @@ namespace HandyControl.Controls
         {
             get => (double) GetValue(MinTitleWidthProperty);
             set => SetValue(MinTitleWidthProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowSortButtonProperty = DependencyProperty.Register(
+            "ShowSortButton", typeof(bool), typeof(PropertyGrid), new PropertyMetadata(ValueBoxes.TrueBox));
+
+        public bool ShowSortButton
+        {
+            get => (bool) GetValue(ShowSortButtonProperty);
+            set => SetValue(ShowSortButtonProperty, value);
         }
 
         public override void OnApplyTemplate()
@@ -117,7 +126,7 @@ namespace HandyControl.Controls
         {
             if (obj == null || _itemsControl == null) return;
 
-            _dataView = CollectionViewSource.GetDefaultView(TypeDescriptor.GetProperties(obj).OfType<PropertyDescriptor>()
+            _dataView = CollectionViewSource.GetDefaultView(TypeDescriptor.GetProperties(obj.GetType()).OfType<PropertyDescriptor>()
                 .Where(item => PropertyResolver.ResolveIsBrowsable(item)).Select(CreatePropertyItem)
                 .Do(item => item.InitElement()));
 
@@ -127,6 +136,8 @@ namespace HandyControl.Controls
 
         private void SortByCategory(object sender, ExecutedRoutedEventArgs e)
         {
+            if (_dataView == null) return;
+
             using (_dataView.DeferRefresh())
             {
                 _dataView.GroupDescriptions.Clear();
@@ -139,6 +150,8 @@ namespace HandyControl.Controls
 
         private void SortByName(object sender, ExecutedRoutedEventArgs e)
         {
+            if (_dataView == null) return;
+
             using (_dataView.DeferRefresh())
             {
                 _dataView.GroupDescriptions.Clear();
@@ -149,6 +162,8 @@ namespace HandyControl.Controls
 
         private void SearchBar_SearchStarted(object sender, FunctionEventArgs<string> e)
         {
+            if (_dataView == null) return;
+
             _searchKey = e.Info;
             if (string.IsNullOrEmpty(_searchKey))
             {

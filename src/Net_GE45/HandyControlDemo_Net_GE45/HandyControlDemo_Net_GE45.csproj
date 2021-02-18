@@ -3,9 +3,17 @@
     <OutputType>WinExe</OutputType>
     <AssemblyName>HandyControlDemo</AssemblyName>
     <RootNamespace>HandyControlDemo</RootNamespace>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net45;net462;net47;net48;net50</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net5.0-windows</TargetFrameworks>
     <ApplicationIcon>..\..\Shared\HandyControlDemo_Shared\Resources\Img\icon.ico</ApplicationIcon>
-    <NoWarn>0108</NoWarn>
+    <NoWarn>0108;MSB3026;MSB3061</NoWarn>
+    <MSBuildWarningsAsMessages>NETSDK1138</MSBuildWarningsAsMessages>
+    <UseWPF>true</UseWPF>
+    <Copyright>Copyright © HandyOrg 2018-2021</Copyright>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <FileVersion>3.1.0.0</FileVersion>
+    <Version>3.1.0.0</Version>
+    <RepositoryUrl>https://github.com/HandyOrg/HandyControl</RepositoryUrl>
+    <ApplicationManifest>..\..\Shared\HandyControlDemo_Shared\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
     <Reference Include="Microsoft.CSharp" />
@@ -164,6 +172,9 @@
     </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\Flag\cn.png">
       <Link>Resources\Img\Flag\cn.png</Link>
+    </Resource>    
+    <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\Flag\ca-Es.png">
+      <Link>Resources\Img\Flag\ca-Es.png</Link>
     </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\Flag\en.png">
       <Link>Resources\Img\Flag\en.png</Link>
@@ -179,6 +190,9 @@
     </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\Flag\pt-BR.png">
       <Link>Resources\Img\Flag\pt-BR.png</Link>
+    </Resource>
+    <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\Flag\pl.png">
+      <Link>Resources\Img\Flag\pl.png</Link>
     </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\Flag\ru.png">
       <Link>Resources\Img\Flag\ru.png</Link>
@@ -278,6 +292,9 @@
     </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\LeftMainContent\Label_16x.png">
       <Link>Resources\Img\LeftMainContent\Label_16x.png</Link>
+    </Resource>
+    <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\LeftMainContent\layout-FlexLayout-16.png">
+      <Link>Resources\Img\LeftMainContent\layout-FlexLayout-16.png</Link>
     </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\LeftMainContent\LinearCarousel_16x.png">
       <Link>Resources\Img\LeftMainContent\LinearCarousel_16x.png</Link>
@@ -432,6 +449,9 @@
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\LeftMainContent\ImageStack_16x.png">
       <Link>Resources\Img\LeftMainContent\ImageStack_16x.png</Link>
     </Resource>
+    <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\LeftMainContent\IncreaseHorizontalSpacing_16x.png">
+      <Link>Resources\Img\LeftMainContent\IncreaseHorizontalSpacing_16x.png</Link>
+    </Resource>
     <Resource Include="..\..\Shared\HandyControlDemo_Shared\Resources\Img\LeftMainContent\Dynamic_16x.png">
       <Link>Resources\Img\LeftMainContent\Dynamic_16x.png</Link>
     </Resource>
@@ -496,6 +516,9 @@
   <ItemGroup>
   <EmbeddedResource Include="..\..\Shared\HandyControlDemo_Shared\Properties\Langs\Lang.tr.resx">
       <Link>Properties\Langs\Lang.tr.resx</Link>
+    </EmbeddedResource>    
+    <EmbeddedResource Include="..\..\Shared\HandyControlDemo_Shared\Properties\Langs\Lang.ca-ES.resx">
+      <Link>Properties\Langs\Lang.ca-ES.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Shared\HandyControlDemo_Shared\Properties\Langs\Lang.en.resx">
       <Link>Properties\Langs\Lang.en.resx</Link>
@@ -511,6 +534,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Shared\HandyControlDemo_Shared\Properties\Langs\Lang.pt-BR.resx">
       <Link>Properties\Langs\Lang.pt-BR.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Shared\HandyControlDemo_Shared\Properties\Langs\Lang.pl.resx">
+      <Link>Properties\Langs\Lang.pl.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Shared\HandyControlDemo_Shared\Properties\Langs\Lang.ru.resx">
       <Link>Properties\Langs\Lang.ru.resx</Link>
@@ -545,20 +571,26 @@
   </ItemGroup>
   <Import Project="..\..\Shared\HandyControlDemo_Shared\HandyControlDemo_Shared.projitems" Label="Shared" />
   <PropertyGroup Condition="$(TargetFramework.StartsWith('net4'))">
-    <PostBuildEvent>if not exist Langs md Langs
-rd /s /q Langs\en
-rd /s /q Langs\fa
-rd /s /q Langs\fr
-rd /s /q Langs\ko-KR
-rd /s /q Langs\pt-BR
-rd /s /q Langs\ru
-rd /s /q Langs\tr
-move en Langs
-move fa Langs
-move fr Langs
-move ko-KR Langs
-move pt-BR Langs
-move ru Langs
-move tr Langs</PostBuildEvent>
+    <PostBuildEvent>
+      if not exist Langs md Langs
+      rd /s /q Langs\en
+      rd /s /q Langs\fa
+      rd /s /q Langs\fr
+      rd /s /q Langs\ko-KR
+      rd /s /q Langs\pt-BR
+      rd /s /q Langs\pl
+      rd /s /q Langs\ru
+      rd /s /q Langs\tr
+      rd /s /q Langs\ca-Es
+      move en Langs
+      move fa Langs
+      move fr Langs
+      move ko-KR Langs
+      move pt-BR Langs
+      move pl Langs
+      move ru Langs
+      move tr Langs
+      move ca-Es Langs
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
